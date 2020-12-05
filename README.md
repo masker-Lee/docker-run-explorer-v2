@@ -2,7 +2,7 @@
 include nis-0.6.97, explorer-v2 and it's poll data all in one
 # How to run:
     1. install docker and docker-compose
-    2. `docker-compose up` (run the nis, poll-data and mysql), mysql port:`9306`
+    2. `docker-compose up` (run the nis, poll-data and mysql)
     3. after nis is finished update, run:start-explorer-es.sh
 # How to Add nis data (if you need it):
     1. copy `nis's data.db` with `copyNisData.sh` in the same dir
