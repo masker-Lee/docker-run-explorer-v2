@@ -1017,7 +1017,8 @@ public class BlockDataFetch {
 	        output = new FileOutputStream(new File(targetFileDir)).getChannel();
 	        output.transferFrom(input, 0, input.size());
 	    } catch (Exception e) {
-			logger.info("copy database error");
+		logger.info("targetFileDir:" + targetFileDir + ", databaseDir:" + databaseDir);	
+		    logger.info("copy database error" + ExceptionsUtil.getExceptionAllinformation(e));
 		}finally {
 	        try {
 				input.close();
