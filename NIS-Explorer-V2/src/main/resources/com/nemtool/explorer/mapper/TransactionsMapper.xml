@@ -1,0 +1,382 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.nemtool.explorer.mapper.TransactionsMapper" >
+  <resultMap id="BaseResultMap" type="com.nemtool.explorer.pojo.Transactions" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="hash" property="hash" jdbcType="VARCHAR" />
+    <result column="height" property="height" jdbcType="INTEGER" />
+    <result column="sender" property="sender" jdbcType="VARCHAR" />
+    <result column="recipient" property="recipient" jdbcType="VARCHAR" />
+    <result column="amount" property="amount" jdbcType="BIGINT" />
+    <result column="fee" property="fee" jdbcType="BIGINT" />
+    <result column="timeStamp" property="timeStamp" jdbcType="BIGINT" />
+    <result column="deadline" property="deadline" jdbcType="BIGINT" />
+    <result column="signature" property="signature" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="apostilleFlag" property="apostilleflag" jdbcType="INTEGER" />
+    <result column="mosaicTransferFlag" property="mosaictransferflag" jdbcType="INTEGER" />
+    <result column="aggregateFlag" property="aggregateflag" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, hash, height, sender, recipient, amount, fee, timeStamp, deadline, signature, 
+    type, apostilleFlag, mosaicTransferFlag, aggregateFlag
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.nemtool.explorer.pojo.TransactionsExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from transactions
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from transactions
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from transactions
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.nemtool.explorer.pojo.TransactionsExample" >
+    delete from transactions
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.nemtool.explorer.pojo.Transactions" >
+    insert DELAYED into transactions (id, hash, height, 
+      sender, recipient, amount, 
+      fee, timeStamp, deadline, 
+      signature, type, apostilleFlag, 
+      mosaicTransferFlag, aggregateFlag)
+    values (#{id,jdbcType=INTEGER}, #{hash,jdbcType=VARCHAR}, #{height,jdbcType=INTEGER}, 
+      #{sender,jdbcType=VARCHAR}, #{recipient,jdbcType=VARCHAR}, #{amount,jdbcType=BIGINT}, 
+      #{fee,jdbcType=BIGINT}, #{timeStamp,jdbcType=BIGINT}, #{deadline,jdbcType=BIGINT}, 
+      #{signature,jdbcType=VARCHAR}, #{type,jdbcType=INTEGER}, #{apostilleflag,jdbcType=INTEGER}, 
+      #{mosaictransferflag,jdbcType=INTEGER}, #{aggregateflag,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.nemtool.explorer.pojo.Transactions" >
+    insert into transactions
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="hash != null" >
+        hash,
+      </if>
+      <if test="height != null" >
+        height,
+      </if>
+      <if test="sender != null" >
+        sender,
+      </if>
+      <if test="recipient != null" >
+        recipient,
+      </if>
+      <if test="amount != null" >
+        amount,
+      </if>
+      <if test="fee != null" >
+        fee,
+      </if>
+      <if test="timeStamp != null" >
+        timeStamp,
+      </if>
+      <if test="deadline != null" >
+        deadline,
+      </if>
+      <if test="signature != null" >
+        signature,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="apostilleflag != null" >
+        apostilleFlag,
+      </if>
+      <if test="mosaictransferflag != null" >
+        mosaicTransferFlag,
+      </if>
+      <if test="aggregateflag != null" >
+        aggregateFlag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="hash != null" >
+        #{hash,jdbcType=VARCHAR},
+      </if>
+      <if test="height != null" >
+        #{height,jdbcType=INTEGER},
+      </if>
+      <if test="sender != null" >
+        #{sender,jdbcType=VARCHAR},
+      </if>
+      <if test="recipient != null" >
+        #{recipient,jdbcType=VARCHAR},
+      </if>
+      <if test="amount != null" >
+        #{amount,jdbcType=BIGINT},
+      </if>
+      <if test="fee != null" >
+        #{fee,jdbcType=BIGINT},
+      </if>
+      <if test="timeStamp != null" >
+        #{timeStamp,jdbcType=BIGINT},
+      </if>
+      <if test="deadline != null" >
+        #{deadline,jdbcType=BIGINT},
+      </if>
+      <if test="signature != null" >
+        #{signature,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="apostilleflag != null" >
+        #{apostilleflag,jdbcType=INTEGER},
+      </if>
+      <if test="mosaictransferflag != null" >
+        #{mosaictransferflag,jdbcType=INTEGER},
+      </if>
+      <if test="aggregateflag != null" >
+        #{aggregateflag,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.nemtool.explorer.pojo.TransactionsExample" resultType="java.lang.Integer" >
+    select count(*) from transactions
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update transactions
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.hash != null" >
+        hash = #{record.hash,jdbcType=VARCHAR},
+      </if>
+      <if test="record.height != null" >
+        height = #{record.height,jdbcType=INTEGER},
+      </if>
+      <if test="record.sender != null" >
+        sender = #{record.sender,jdbcType=VARCHAR},
+      </if>
+      <if test="record.recipient != null" >
+        recipient = #{record.recipient,jdbcType=VARCHAR},
+      </if>
+      <if test="record.amount != null" >
+        amount = #{record.amount,jdbcType=BIGINT},
+      </if>
+      <if test="record.fee != null" >
+        fee = #{record.fee,jdbcType=BIGINT},
+      </if>
+      <if test="record.timeStamp != null" >
+        timeStamp = #{record.timeStamp,jdbcType=BIGINT},
+      </if>
+      <if test="record.deadline != null" >
+        deadline = #{record.deadline,jdbcType=BIGINT},
+      </if>
+      <if test="record.signature != null" >
+        signature = #{record.signature,jdbcType=VARCHAR},
+      </if>
+      <if test="record.type != null" >
+        type = #{record.type,jdbcType=INTEGER},
+      </if>
+      <if test="record.apostilleflag != null" >
+        apostilleFlag = #{record.apostilleflag,jdbcType=INTEGER},
+      </if>
+      <if test="record.mosaictransferflag != null" >
+        mosaicTransferFlag = #{record.mosaictransferflag,jdbcType=INTEGER},
+      </if>
+      <if test="record.aggregateflag != null" >
+        aggregateFlag = #{record.aggregateflag,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update transactions
+    set id = #{record.id,jdbcType=INTEGER},
+      hash = #{record.hash,jdbcType=VARCHAR},
+      height = #{record.height,jdbcType=INTEGER},
+      sender = #{record.sender,jdbcType=VARCHAR},
+      recipient = #{record.recipient,jdbcType=VARCHAR},
+      amount = #{record.amount,jdbcType=BIGINT},
+      fee = #{record.fee,jdbcType=BIGINT},
+      timeStamp = #{record.timeStamp,jdbcType=BIGINT},
+      deadline = #{record.deadline,jdbcType=BIGINT},
+      signature = #{record.signature,jdbcType=VARCHAR},
+      type = #{record.type,jdbcType=INTEGER},
+      apostilleFlag = #{record.apostilleflag,jdbcType=INTEGER},
+      mosaicTransferFlag = #{record.mosaictransferflag,jdbcType=INTEGER},
+      aggregateFlag = #{record.aggregateflag,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.nemtool.explorer.pojo.Transactions" >
+    update transactions
+    <set >
+      <if test="hash != null" >
+        hash = #{hash,jdbcType=VARCHAR},
+      </if>
+      <if test="height != null" >
+        height = #{height,jdbcType=INTEGER},
+      </if>
+      <if test="sender != null" >
+        sender = #{sender,jdbcType=VARCHAR},
+      </if>
+      <if test="recipient != null" >
+        recipient = #{recipient,jdbcType=VARCHAR},
+      </if>
+      <if test="amount != null" >
+        amount = #{amount,jdbcType=BIGINT},
+      </if>
+      <if test="fee != null" >
+        fee = #{fee,jdbcType=BIGINT},
+      </if>
+      <if test="timeStamp != null" >
+        timeStamp = #{timeStamp,jdbcType=BIGINT},
+      </if>
+      <if test="deadline != null" >
+        deadline = #{deadline,jdbcType=BIGINT},
+      </if>
+      <if test="signature != null" >
+        signature = #{signature,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="apostilleflag != null" >
+        apostilleFlag = #{apostilleflag,jdbcType=INTEGER},
+      </if>
+      <if test="mosaictransferflag != null" >
+        mosaicTransferFlag = #{mosaictransferflag,jdbcType=INTEGER},
+      </if>
+      <if test="aggregateflag != null" >
+        aggregateFlag = #{aggregateflag,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.nemtool.explorer.pojo.Transactions" >
+    update transactions
+    set hash = #{hash,jdbcType=VARCHAR},
+      height = #{height,jdbcType=INTEGER},
+      sender = #{sender,jdbcType=VARCHAR},
+      recipient = #{recipient,jdbcType=VARCHAR},
+      amount = #{amount,jdbcType=BIGINT},
+      fee = #{fee,jdbcType=BIGINT},
+      timeStamp = #{timeStamp,jdbcType=BIGINT},
+      deadline = #{deadline,jdbcType=BIGINT},
+      signature = #{signature,jdbcType=VARCHAR},
+      type = #{type,jdbcType=INTEGER},
+      apostilleFlag = #{apostilleflag,jdbcType=INTEGER},
+      mosaicTransferFlag = #{mosaictransferflag,jdbcType=INTEGER},
+      aggregateFlag = #{aggregateflag,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="queryMaxTransactionHeight" resultType="java.lang.Integer" >
+    select MAX(height)from transactions
+  </select>
+  <insert id="createTransactionList" parameterType="java.util.List" >
+    INSERT INTO transactions (hash, height, sender, recipient, amount, fee, timeStamp, deadline, signature, type)
+  <!--   INSERT INTO transactions (hash, height, sender, recipient) -->
+        VALUES
+        <foreach collection="transactionsList"  separator="," item="item">
+            (#{item.hash,jdbcType=VARCHAR},
+             #{item.height,jdbcType=INTEGER},
+             #{item.sender,jdbcType=VARCHAR},
+             #{item.recipient,jdbcType=VARCHAR},
+             #{item.amount,jdbcType=BIGINT},
+             #{item.fee,jdbcType=BIGINT},
+             #{item.timeStamp,jdbcType=BIGINT},
+             #{item.deadline,jdbcType=BIGINT},
+             #{item.signature,jdbcType=VARCHAR},
+             #{item.type,jdbcType=INTEGER}
+             )
+        </foreach>
+  </insert>
+  <select id="selectAllHash" resultType="java.lang.String">
+  	SELECT hash from transactions
+  </select>
+  <select id="findByTypeOrMos" resultMap="BaseResultMap">
+  	SELECT <include refid="Base_Column_List" /> from transactions 
+  		where type = #{type1,jdbcType=INTEGER} or type = #{type2,jdbcType=INTEGER} or mosaicTransferFlag = #{mos,jdbcType=INTEGER}
+  		order by height desc, timeStamp desc limit #{skip,jdbcType=INTEGER},#{pageSize,jdbcType=INTEGER}
+  </select>
+</mapper>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.nemtool.explorer.mapper.TransactionMysqlMapper" >
+	<update id="createTable">
+	  CREATE TABLE If Not Exists `transactionh2`(
+		  `id` INT NOT NULL,
+		  `senderid` INT,
+		  `recipientid` INT,
+		  `timeStamp` BIGINT(16),
+		  PRIMARY KEY (`id`))
+	</update>
+	<update id="createIndexId">
+		CREATE INDEX `id_tran` on transactionh2(id)
+	</update>
+	<update id="createIndexSenderid">
+	  	CREATE INDEX `senderid_tran` on transactionh2(senderid)
+	</update>
+	<update id="createIndexRecipientid">
+	  	CREATE INDEX `recipientid_tran` on transactionh2(recipientid)
+	</update>
+	<update id="createIndexTimestamp">
+	  	CREATE INDEX `timestamp_tran` on transactionh2(timeStamp)
+	</update>
+
+	<insert id="insert" parameterType="com.nemtool.explorer.pojo.TransactionH2">
+		insert DELAYED into transactionh2(id,senderid,recipientid,timeStamp) 
+		VALUES (#{id,jdbcType=INTEGER}, #{senderid,jdbcType=INTEGER}, 
+				#{recipientid,jdbcType=INTEGER},#{timeStamp,jdbcType=BIGINT})
+	</insert>
+	<select id="getTransactionById" parameterType="java.lang.Integer" resultType="com.nemtool.explorer.pojo.TransactionH2">
+		(SELECT id,timeStamp,senderid,recipientid FROM transactionh2 WHERE 
+		senderid=#{id,jdbcType=INTEGER}) UNION
+		(SELECT id,timeStamp,senderid,recipientid FROM transactionh2 WHERE 
+		recipientid=#{id,jdbcType=INTEGER})
+	</select>
+	
+	<update id="dropTable">
+	  DROP TABLE If Exists `transactionh2`
+	</update>
+  
+</mapper>

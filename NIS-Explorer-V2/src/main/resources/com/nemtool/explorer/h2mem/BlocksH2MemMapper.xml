@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.nemtool.explorer.h2mem.BlocksH2MemMapper" >
+<resultMap id="BaseResultMap" type="com.nemtool.explorer.pojo.BlockH2" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+	    <result column="harvesterid" property="harvesterid" jdbcType="INTEGER" />
+	    <result column="harvestedinname" property="harvestedinname" jdbcType="INTEGER" />
+	    <result column="totalfee" property="totalfee" jdbcType="BIGINT" />
+	    <result column="height" property="height" jdbcType="INTEGER" />
+	</resultMap>
+	<insert id="insert" parameterType="com.nemtool.explorer.pojo.BlockH2">
+		insert into blocksh2mem (id,harvesterid,harvestedinname,totalfee,height) 
+		values(#{id,jdbcType=INTEGER}, #{harvesterid,jdbcType=INTEGER}, 
+				#{harvestedinname,jdbcType=INTEGER},#{totalfee,jdbcType=BIGINT},#{height,jdbcType=INTEGER})
+	</insert>
+	<select id="blocksH2AllList" resultMap="BaseResultMap">
+		select id,harvesterid,harvestedinname,totalfee,height from blocksh2mem
+	</select>
+	<update id="createTable">
+	  CREATE TABLE `blocksh2mem`(
+		  `id` INT NOT NULL,
+		  `harvesterid` INT,
+		  `harvestedinname` INT,
+		  `totalfee` BIGINT(16),
+		  `height` INT,
+		  PRIMARY KEY (`id`))
+	</update>
+	
+	<update id="createIndexId">
+		CREATE INDEX `id_blocks` on blocksh2mem(id)
+	</update>
+	<update id="createIndexHarvesterid">
+	  	CREATE INDEX `harvesterid_blocks` on blocksh2mem(harvesterid)
+	</update>
+	<update id="createIndexHarvestedinname">
+	  	CREATE INDEX `harvestedinname_blocks` on blocksh2mem(harvestedinname)
+	</update>
+	<update id="createIndexTotalfee">
+	  	CREATE INDEX `totalfee_blocks` on blocksh2mem(totalfee)
+	</update>
+	<update id="createIndexHeight">
+	  	CREATE INDEX `height_blocks` on blocksh2mem(height)
+	</update>
+	
+	<insert id="insertList" parameterType="java.util.List" >
+		INSERT INTO blocksh2mem(id,harvesterid,harvestedinname,totalfee,height) 
+		VALUES 
+		<foreach collection="blocksH2List"  separator="," item="item">
+			(#{item.id,jdbcType=INTEGER}, #{item.harvesterid,jdbcType=INTEGER}, 
+				#{item.harvestedinname,jdbcType=INTEGER},#{item.totalfee,jdbcType=BIGINT},#{item.height,jdbcType=INTEGER})
+		</foreach>
+	</insert>
+	<select id="getByHarvesterId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+		<!-- SELECT id,harvesterid,harvestedinname,totalfee,height FROM blocksh2mem WHERE 
+			harvesterid=#{id,jdbcType=INTEGER} or harvestedinname=#{id,jdbcType=INTEGER} -->
+			(SELECT id,harvesterid,harvestedinname,totalfee,height FROM blocksh2mem WHERE 
+			harvesterid=#{id,jdbcType=INTEGER}) UNION
+			(SELECT id,harvesterid,harvestedinname,totalfee,height FROM blocksh2mem WHERE 
+			harvestedinname=#{id,jdbcType=INTEGER})
+	</select>
+	<select id="getMaxHeight" resultType="java.lang.Integer">
+		select max(height) from blocksh2mem
+	</select>
+	<update id="dropTable">
+		DROP TABLE blocksh2mem
+	</update>
+  
+</mapper>

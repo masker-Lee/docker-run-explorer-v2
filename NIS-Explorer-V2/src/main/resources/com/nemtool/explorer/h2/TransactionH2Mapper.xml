@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.nemtool.explorer.h2.TransactionH2Mapper" >
+	<resultMap id="BaseResultMap" type="com.nemtool.explorer.pojo.TransactionH2" >
+	    <id column="id" property="id" jdbcType="INTEGER" />
+	    <result column="timestamp" property="timeStamp" jdbcType="BIGINT" />
+	    <result column="senderid" property="senderid" jdbcType="INTEGER" />
+	    <result column="recipientid" property="recipientid" jdbcType="INTEGER" />
+	</resultMap>
+	<select id="getAllTransaction" resultMap="BaseResultMap">
+		select ID,TIMESTAMP,SENDERID,RECIPIENTID from TRANSFERS
+	</select>
+	<select id="getMaxTimestampById" parameterType="java.lang.Integer" resultType="java.lang.Long">
+		select max(timestamp) from ((SELECT id,timestamp,senderid,recipientid FROM TRANSFERS WHERE 
+		senderid=#{id,jdbcType=INTEGER}) UNION
+		(SELECT id,timestamp,senderid,recipientid FROM TRANSFERS WHERE 
+		recipientid=#{id,jdbcType=INTEGER}))
+	</select>
+	<select id="getTransactionById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+		(SELECT id,timestamp,senderid,recipientid FROM TRANSFERS WHERE 
+		senderid=#{id,jdbcType=INTEGER}) UNION
+		(SELECT id,timestamp,senderid,recipientid FROM TRANSFERS WHERE 
+		recipientid=#{id,jdbcType=INTEGER})
+	</select>
+	
+</mapper>

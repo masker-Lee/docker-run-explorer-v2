@@ -1,0 +1,501 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.nemtool.explorer.mapper.MosaicsMapper" >
+  <resultMap id="BaseResultMap" type="com.nemtool.explorer.pojo.Mosaics" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="mosaicID" property="mosaicid" jdbcType="VARCHAR" />
+    <result column="mosaicName" property="mosaicname" jdbcType="VARCHAR" />
+    <result column="namespace" property="namespace" jdbcType="VARCHAR" />
+    <result column="divisibility" property="divisibility" jdbcType="INTEGER" />
+    <result column="initialSupply" property="initialsupply" jdbcType="BIGINT" />
+    <result column="supplyMutable" property="supplymutable" jdbcType="INTEGER" />
+    <result column="transferable" property="transferable" jdbcType="INTEGER" />
+    <result column="levyType" property="levytype" jdbcType="INTEGER" />
+    <result column="levyRecipient" property="levyrecipient" jdbcType="VARCHAR" />
+    <result column="levyNamespace" property="levynamespace" jdbcType="VARCHAR" />
+    <result column="levyMosaic" property="levymosaic" jdbcType="VARCHAR" />
+    <result column="levyFee" property="levyfee" jdbcType="BIGINT" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="timeStamp" property="timeStamp" jdbcType="BIGINT" />
+    <result column="height" property="height" jdbcType="INTEGER" />
+    <result column="no" property="no" jdbcType="BIGINT" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.nemtool.explorer.pojo.Mosaics" extends="BaseResultMap" >
+    <result column="description" property="description" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, mosaicID, mosaicName, namespace, divisibility, initialSupply, supplyMutable, 
+    transferable, levyType, levyRecipient, levyNamespace, levyMosaic, levyFee, creator, 
+    timeStamp, height, no
+  </sql>
+  <sql id="Blob_Column_List" >
+    description
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.nemtool.explorer.pojo.MosaicsExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from mosaics
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.nemtool.explorer.pojo.MosaicsExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from mosaics
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from mosaics
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from mosaics
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.nemtool.explorer.pojo.MosaicsExample" >
+    delete from mosaics
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.nemtool.explorer.pojo.Mosaics" >
+    insert into mosaics (id, mosaicID, mosaicName, 
+      namespace, divisibility, initialSupply, 
+      supplyMutable, transferable, levyType, 
+      levyRecipient, levyNamespace, levyMosaic, 
+      levyFee, creator, timeStamp, 
+      height, no, description
+      )
+    values (#{id,jdbcType=INTEGER}, #{mosaicid,jdbcType=VARCHAR}, #{mosaicname,jdbcType=VARCHAR}, 
+      #{namespace,jdbcType=VARCHAR}, #{divisibility,jdbcType=INTEGER}, #{initialsupply,jdbcType=BIGINT}, 
+      #{supplymutable,jdbcType=INTEGER}, #{transferable,jdbcType=INTEGER}, #{levytype,jdbcType=INTEGER}, 
+      #{levyrecipient,jdbcType=VARCHAR}, #{levynamespace,jdbcType=VARCHAR}, #{levymosaic,jdbcType=VARCHAR}, 
+      #{levyfee,jdbcType=BIGINT}, #{creator,jdbcType=VARCHAR}, #{timeStamp,jdbcType=BIGINT}, 
+      #{height,jdbcType=INTEGER}, #{no,jdbcType=BIGINT}, #{description,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.nemtool.explorer.pojo.Mosaics" >
+    insert into mosaics
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="mosaicid != null" >
+        mosaicID,
+      </if>
+      <if test="mosaicname != null" >
+        mosaicName,
+      </if>
+      <if test="namespace != null" >
+        namespace,
+      </if>
+      <if test="divisibility != null" >
+        divisibility,
+      </if>
+      <if test="initialsupply != null" >
+        initialSupply,
+      </if>
+      <if test="supplymutable != null" >
+        supplyMutable,
+      </if>
+      <if test="transferable != null" >
+        transferable,
+      </if>
+      <if test="levytype != null" >
+        levyType,
+      </if>
+      <if test="levyrecipient != null" >
+        levyRecipient,
+      </if>
+      <if test="levynamespace != null" >
+        levyNamespace,
+      </if>
+      <if test="levymosaic != null" >
+        levyMosaic,
+      </if>
+      <if test="levyfee != null" >
+        levyFee,
+      </if>
+      <if test="creator != null" >
+        creator,
+      </if>
+      <if test="timeStamp != null" >
+        timeStamp,
+      </if>
+      <if test="height != null" >
+        height,
+      </if>
+      <if test="no != null" >
+        no,
+      </if>
+      <if test="description != null" >
+        description,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="mosaicid != null" >
+        #{mosaicid,jdbcType=VARCHAR},
+      </if>
+      <if test="mosaicname != null" >
+        #{mosaicname,jdbcType=VARCHAR},
+      </if>
+      <if test="namespace != null" >
+        #{namespace,jdbcType=VARCHAR},
+      </if>
+      <if test="divisibility != null" >
+        #{divisibility,jdbcType=INTEGER},
+      </if>
+      <if test="initialsupply != null" >
+        #{initialsupply,jdbcType=BIGINT},
+      </if>
+      <if test="supplymutable != null" >
+        #{supplymutable,jdbcType=INTEGER},
+      </if>
+      <if test="transferable != null" >
+        #{transferable,jdbcType=INTEGER},
+      </if>
+      <if test="levytype != null" >
+        #{levytype,jdbcType=INTEGER},
+      </if>
+      <if test="levyrecipient != null" >
+        #{levyrecipient,jdbcType=VARCHAR},
+      </if>
+      <if test="levynamespace != null" >
+        #{levynamespace,jdbcType=VARCHAR},
+      </if>
+      <if test="levymosaic != null" >
+        #{levymosaic,jdbcType=VARCHAR},
+      </if>
+      <if test="levyfee != null" >
+        #{levyfee,jdbcType=BIGINT},
+      </if>
+      <if test="creator != null" >
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="timeStamp != null" >
+        #{timeStamp,jdbcType=BIGINT},
+      </if>
+      <if test="height != null" >
+        #{height,jdbcType=INTEGER},
+      </if>
+      <if test="no != null" >
+        #{no,jdbcType=BIGINT},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.nemtool.explorer.pojo.MosaicsExample" resultType="java.lang.Integer" >
+    select count(*) from mosaics
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update mosaics
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.mosaicid != null" >
+        mosaicID = #{record.mosaicid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mosaicname != null" >
+        mosaicName = #{record.mosaicname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.namespace != null" >
+        namespace = #{record.namespace,jdbcType=VARCHAR},
+      </if>
+      <if test="record.divisibility != null" >
+        divisibility = #{record.divisibility,jdbcType=INTEGER},
+      </if>
+      <if test="record.initialsupply != null" >
+        initialSupply = #{record.initialsupply,jdbcType=BIGINT},
+      </if>
+      <if test="record.supplymutable != null" >
+        supplyMutable = #{record.supplymutable,jdbcType=INTEGER},
+      </if>
+      <if test="record.transferable != null" >
+        transferable = #{record.transferable,jdbcType=INTEGER},
+      </if>
+      <if test="record.levytype != null" >
+        levyType = #{record.levytype,jdbcType=INTEGER},
+      </if>
+      <if test="record.levyrecipient != null" >
+        levyRecipient = #{record.levyrecipient,jdbcType=VARCHAR},
+      </if>
+      <if test="record.levynamespace != null" >
+        levyNamespace = #{record.levynamespace,jdbcType=VARCHAR},
+      </if>
+      <if test="record.levymosaic != null" >
+        levyMosaic = #{record.levymosaic,jdbcType=VARCHAR},
+      </if>
+      <if test="record.levyfee != null" >
+        levyFee = #{record.levyfee,jdbcType=BIGINT},
+      </if>
+      <if test="record.creator != null" >
+        creator = #{record.creator,jdbcType=VARCHAR},
+      </if>
+      <if test="record.timeStamp != null" >
+        timeStamp = #{record.timeStamp,jdbcType=BIGINT},
+      </if>
+      <if test="record.height != null" >
+        height = #{record.height,jdbcType=INTEGER},
+      </if>
+      <if test="record.no != null" >
+        no = #{record.no,jdbcType=BIGINT},
+      </if>
+      <if test="record.description != null" >
+        description = #{record.description,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update mosaics
+    set id = #{record.id,jdbcType=INTEGER},
+      mosaicID = #{record.mosaicid,jdbcType=VARCHAR},
+      mosaicName = #{record.mosaicname,jdbcType=VARCHAR},
+      namespace = #{record.namespace,jdbcType=VARCHAR},
+      divisibility = #{record.divisibility,jdbcType=INTEGER},
+      initialSupply = #{record.initialsupply,jdbcType=BIGINT},
+      supplyMutable = #{record.supplymutable,jdbcType=INTEGER},
+      transferable = #{record.transferable,jdbcType=INTEGER},
+      levyType = #{record.levytype,jdbcType=INTEGER},
+      levyRecipient = #{record.levyrecipient,jdbcType=VARCHAR},
+      levyNamespace = #{record.levynamespace,jdbcType=VARCHAR},
+      levyMosaic = #{record.levymosaic,jdbcType=VARCHAR},
+      levyFee = #{record.levyfee,jdbcType=BIGINT},
+      creator = #{record.creator,jdbcType=VARCHAR},
+      timeStamp = #{record.timeStamp,jdbcType=BIGINT},
+      height = #{record.height,jdbcType=INTEGER},
+      no = #{record.no,jdbcType=BIGINT},
+      description = #{record.description,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update mosaics
+    set id = #{record.id,jdbcType=INTEGER},
+      mosaicID = #{record.mosaicid,jdbcType=VARCHAR},
+      mosaicName = #{record.mosaicname,jdbcType=VARCHAR},
+      namespace = #{record.namespace,jdbcType=VARCHAR},
+      divisibility = #{record.divisibility,jdbcType=INTEGER},
+      initialSupply = #{record.initialsupply,jdbcType=BIGINT},
+      supplyMutable = #{record.supplymutable,jdbcType=INTEGER},
+      transferable = #{record.transferable,jdbcType=INTEGER},
+      levyType = #{record.levytype,jdbcType=INTEGER},
+      levyRecipient = #{record.levyrecipient,jdbcType=VARCHAR},
+      levyNamespace = #{record.levynamespace,jdbcType=VARCHAR},
+      levyMosaic = #{record.levymosaic,jdbcType=VARCHAR},
+      levyFee = #{record.levyfee,jdbcType=BIGINT},
+      creator = #{record.creator,jdbcType=VARCHAR},
+      timeStamp = #{record.timeStamp,jdbcType=BIGINT},
+      height = #{record.height,jdbcType=INTEGER},
+      no = #{record.no,jdbcType=BIGINT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.nemtool.explorer.pojo.Mosaics" >
+    update mosaics
+    <set >
+      <if test="mosaicid != null" >
+        mosaicID = #{mosaicid,jdbcType=VARCHAR},
+      </if>
+      <if test="mosaicname != null" >
+        mosaicName = #{mosaicname,jdbcType=VARCHAR},
+      </if>
+      <if test="namespace != null" >
+        namespace = #{namespace,jdbcType=VARCHAR},
+      </if>
+      <if test="divisibility != null" >
+        divisibility = #{divisibility,jdbcType=INTEGER},
+      </if>
+      <if test="initialsupply != null" >
+        initialSupply = #{initialsupply,jdbcType=BIGINT},
+      </if>
+      <if test="supplymutable != null" >
+        supplyMutable = #{supplymutable,jdbcType=INTEGER},
+      </if>
+      <if test="transferable != null" >
+        transferable = #{transferable,jdbcType=INTEGER},
+      </if>
+      <if test="levytype != null" >
+        levyType = #{levytype,jdbcType=INTEGER},
+      </if>
+      <if test="levyrecipient != null" >
+        levyRecipient = #{levyrecipient,jdbcType=VARCHAR},
+      </if>
+      <if test="levynamespace != null" >
+        levyNamespace = #{levynamespace,jdbcType=VARCHAR},
+      </if>
+      <if test="levymosaic != null" >
+        levyMosaic = #{levymosaic,jdbcType=VARCHAR},
+      </if>
+      <if test="levyfee != null" >
+        levyFee = #{levyfee,jdbcType=BIGINT},
+      </if>
+      <if test="creator != null" >
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="timeStamp != null" >
+        timeStamp = #{timeStamp,jdbcType=BIGINT},
+      </if>
+      <if test="height != null" >
+        height = #{height,jdbcType=INTEGER},
+      </if>
+      <if test="no != null" >
+        no = #{no,jdbcType=BIGINT},
+      </if>
+      <if test="description != null" >
+        description = #{description,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.nemtool.explorer.pojo.Mosaics" >
+    update mosaics
+    set mosaicID = #{mosaicid,jdbcType=VARCHAR},
+      mosaicName = #{mosaicname,jdbcType=VARCHAR},
+      namespace = #{namespace,jdbcType=VARCHAR},
+      divisibility = #{divisibility,jdbcType=INTEGER},
+      initialSupply = #{initialsupply,jdbcType=BIGINT},
+      supplyMutable = #{supplymutable,jdbcType=INTEGER},
+      transferable = #{transferable,jdbcType=INTEGER},
+      levyType = #{levytype,jdbcType=INTEGER},
+      levyRecipient = #{levyrecipient,jdbcType=VARCHAR},
+      levyNamespace = #{levynamespace,jdbcType=VARCHAR},
+      levyMosaic = #{levymosaic,jdbcType=VARCHAR},
+      levyFee = #{levyfee,jdbcType=BIGINT},
+      creator = #{creator,jdbcType=VARCHAR},
+      timeStamp = #{timeStamp,jdbcType=BIGINT},
+      height = #{height,jdbcType=INTEGER},
+      no = #{no,jdbcType=BIGINT},
+      description = #{description,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.nemtool.explorer.pojo.Mosaics" >
+    update mosaics
+    set mosaicID = #{mosaicid,jdbcType=VARCHAR},
+      mosaicName = #{mosaicname,jdbcType=VARCHAR},
+      namespace = #{namespace,jdbcType=VARCHAR},
+      divisibility = #{divisibility,jdbcType=INTEGER},
+      initialSupply = #{initialsupply,jdbcType=BIGINT},
+      supplyMutable = #{supplymutable,jdbcType=INTEGER},
+      transferable = #{transferable,jdbcType=INTEGER},
+      levyType = #{levytype,jdbcType=INTEGER},
+      levyRecipient = #{levyrecipient,jdbcType=VARCHAR},
+      levyNamespace = #{levynamespace,jdbcType=VARCHAR},
+      levyMosaic = #{levymosaic,jdbcType=VARCHAR},
+      levyFee = #{levyfee,jdbcType=BIGINT},
+      creator = #{creator,jdbcType=VARCHAR},
+      timeStamp = #{timeStamp,jdbcType=BIGINT},
+      height = #{height,jdbcType=INTEGER},
+      no = #{no,jdbcType=BIGINT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <insert id="insertList" parameterType="java.util.List" >
+    INSERT INTO mosaics (mosaicID, mosaicName, namespace, divisibility, initialSupply, 
+    							supplyMutable, transferable, levyType, levyRecipient, levyNamespace, levyMosaic, 
+      							levyFee, creator, timeStamp, height, no, description)
+        VALUES
+        <foreach collection="mosaicsList"  separator="," item="item">
+            (#{item.mosaicid,jdbcType=VARCHAR}, #{item.mosaicname,jdbcType=VARCHAR}, 
+		      #{item.namespace,jdbcType=VARCHAR}, #{item.divisibility,jdbcType=INTEGER}, #{item.initialsupply,jdbcType=BIGINT}, 
+		      #{item.supplymutable,jdbcType=INTEGER}, #{item.transferable,jdbcType=INTEGER}, #{item.levytype,jdbcType=INTEGER}, 
+		      #{item.levyrecipient,jdbcType=VARCHAR}, #{item.levynamespace,jdbcType=VARCHAR}, #{item.levymosaic,jdbcType=VARCHAR}, 
+		      #{item.levyfee,jdbcType=BIGINT}, #{item.creator,jdbcType=VARCHAR}, #{item.timeStamp,jdbcType=BIGINT}, 
+		      #{item.height,jdbcType=INTEGER}, #{item.no,jdbcType=BIGINT}, #{item.description,jdbcType=LONGVARCHAR})
+        </foreach>
+  </insert>
+  <select id="findAllMosaicId" resultType="java.lang.String">
+  	SELECT mosaicID from mosaics
+  </select>
+</mapper>

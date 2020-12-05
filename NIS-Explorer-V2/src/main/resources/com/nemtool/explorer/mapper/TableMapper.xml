@@ -1,0 +1,329 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.nemtool.explorer.mapper.TableMapper" >
+  <update id="createBlocks">
+  	CREATE TABLE If Not Exists `blocks`(
+	  `id` INT NOT NULL AUTO_INCREMENT,
+	  `height` int(10) UNIQUE NOT NULL,
+	  `timeStamp` BIGINT(15) NOT NULL,
+	  PRIMARY KEY (`id`))
+	  ENGINE = InnoDB
+	  DEFAULT CHARACTER SET = utf8;
+  </update>
+  <update id="createAccountmosaics">
+  	CREATE TABLE If Not Exists `accountmosaics`(
+	  `id` INT NOT NULL AUTO_INCREMENT,
+	  `address` varchar(50) NOT NULL,
+	  `mosaicID` varchar(200) NOT NULL,
+	  `quantity` BIGINT(15) NOT NULL,
+	  PRIMARY KEY (`id`))
+	  ENGINE = InnoDB
+	  DEFAULT CHARACTER SET = utf8;
+  </update>
+  <update id="createAccountremarks">
+  	CREATE TABLE If Not Exists `accountremarks`(
+	  `id` INT NOT NULL AUTO_INCREMENT,
+	  `address` varchar(50) UNIQUE NOT NULL,
+	  `remark` text,
+	  PRIMARY KEY (`id`))
+	  ENGINE = InnoDB
+	  DEFAULT CHARACTER SET = utf8;
+  </update>
+  <update id="createAccounts">
+  	CREATE TABLE If Not Exists `accounts`(
+	  `id` INT NOT NULL AUTO_INCREMENT,
+	  `address` varchar(50) UNIQUE NOT NULL,
+	  `balance` BIGINT(20) DEFAULT 0,
+	  `blocks` BIGINT(20) DEFAULT 0,
+	  `fees` BIGINT(20) DEFAULT 0,
+	  `label` varchar(200) DEFAULT NULL,
+	  `lastBlock` BIGINT(20) DEFAULT 0,
+	  `publicKey` varchar(80),
+	  `timeStamp` BIGINT(15) DEFAULT 0,
+	  `remark` varchar(200),
+	  UNIQUE INDEX `address_UNIQUE` (`address`),
+	  INDEX `publickey_INDEX` (`publicKey`),
+	  PRIMARY KEY (`id`))
+	  ENGINE = InnoDB
+	  DEFAULT CHARACTER SET = utf8;
+  </update>
+  <update id="createErrormessages">
+  	CREATE TABLE If Not Exists `errormessages`(
+	  `id` INT NOT NULL AUTO_INCREMENT,
+	  `message` text NOT NULL,
+	  PRIMARY KEY (`id`))
+	  ENGINE = InnoDB
+	  DEFAULT CHARACTER SET = utf8;
+  </update>
+  <update id="createMosaics">
+  	CREATE TABLE If Not Exists `mosaics`(
+	  `id` INT NOT NULL AUTO_INCREMENT,
+	  `mosaicID` varchar(200) UNIQUE NOT NULL,
+	  `mosaicName` varchar(200) NOT NULL,
+	  `namespace` varchar(200) NOT NULL,
+	  `description` text,
+	  `divisibility` int(3),
+	  `initialSupply` BIGINT(20),
+	  `supplyMutable` int(3),
+	  `transferable` int(3),
+	  `levyType` int(3),
+	  `levyRecipient` varchar(50),
+	  `levyNamespace` varchar(200),
+	  `levyMosaic` varchar(200),
+	  `levyFee` BIGINT(20),
+	  `creator` varchar(50) NOT NULL,
+	  `timeStamp` BIGINT(15) NOT NULL,
+	  `height` int(10) NOT NULL,
+	  `no` BIGINT(15) UNIQUE NOT NULL,
+	  PRIMARY KEY (`id`))
+	  ENGINE = InnoDB
+	  DEFAULT CHARACTER SET = utf8;
+  </update>
+  <update id="createMosaictransactions">
+  	CREATE TABLE If Not Exists `mosaictransactions`(
+	  `id` INT NOT NULL AUTO_INCREMENT,
+	  `hash` varchar(64) NOT NULL,
+	  `no` BIGINT(15) UNIQUE NOT NULL,
+	  `sender` varchar(50) NOT NULL,
+	  `recipient` varchar(50) NOT NULL,
+	  `namespace` varchar(200) NOT NULL,
+	  `mosaic` varchar(200) NOT NULL,
+	  `quantity` BIGINT(15) NOT NULL,
+	  `timeStamp` BIGINT(15) NOT NULL,
+	  PRIMARY KEY (`id`))
+	  ENGINE = InnoDB
+	  DEFAULT CHARACTER SET = utf8;
+  </update>
+  <update id="createNamespaces">
+  	CREATE TABLE If Not Exists `namespaces`(
+	  `id` INT NOT NULL AUTO_INCREMENT,
+	  `namespace` varchar(200) NOT NULL,
+	  `no` BIGINT(15) UNIQUE NOT NULL,
+	  `rootNamespace` varchar(200),
+	  `rootNamespaceID` int(10),
+	  `creator` varchar(50) NOT NULL,
+	  `height` int(10) NOT NULL,
+	  `timeStamp` BIGINT(15) NOT NULL,
+	  `expiredTime` BIGINT(15) NOT NULL,
+	  `subNamespaces` varchar(8000),
+	  `mosaicNames` varchar(200),
+	  PRIMARY KEY (`id`))
+	  ENGINE = InnoDB
+	  DEFAULT CHARACTER SET = utf8;
+  </update>
+  <update id="createPoll">
+  	CREATE TABLE If Not Exists `poll`(
+	  `id` INT NOT NULL AUTO_INCREMENT,
+	  `timeStamp` BIGINT(15) NOT NULL,
+	  `creator` varchar(50) NOT NULL,
+	  `address` varchar(50) NOT NULL,
+	  `title` text NOT NULL,
+	  `description` text,
+	  `type` int(3) NOT NULL,
+	  `multiple` int NOT NULL,
+	  `doe` BIGINT(15) NOT NULL,
+	  `strings` text NOT NULL,
+	  `addresses` text NOT NULL,
+	  `whitelist` text NOT NULL,
+	  PRIMARY KEY (`id`))
+	  ENGINE = InnoDB
+	  DEFAULT CHARACTER SET = utf8;
+  </update>
+  <update id="createPollindexes">
+  	CREATE TABLE If Not Exists `pollindexes`(
+	  `id` INT NOT NULL AUTO_INCREMENT,
+	  `creator` varchar(50) NOT NULL,
+	  `address` varchar(50) NOT NULL,
+	  `title` text NOT NULL,
+	  `type` int(3) NOT NULL,
+	  `doe` BIGINT(15) NOT NULL,
+	  PRIMARY KEY (`id`))
+	  ENGINE = InnoDB
+	  DEFAULT CHARACTER SET = utf8;
+  </update>
+  <update id="createSupernodes">
+  	CREATE TABLE If Not Exists `supernodes`(
+	  `id` INT UNIQUE NOT NULL,
+	  `host` varchar(200) NOT NULL,
+	  `name` varchar(200) NOT NULL,
+	  `time` varchar(50) NOT NULL,
+	  `payoutAddress` varchar(50) NOT NULL,
+	  PRIMARY KEY (`id`))
+	  ENGINE = InnoDB
+	  DEFAULT CHARACTER SET = utf8;
+  </update>
+  <update id="createSupernodepayouts">
+  	CREATE TABLE If Not Exists `supernodepayouts`(
+	  `id` INT NOT NULL AUTO_INCREMENT,
+	  `round` int NOT NULL,
+	  `sender` varchar(50) NOT NULL,
+	  `recipient` varchar(50) NOT NULL,
+	  `amount` BIGINT(15) NOT NULL,
+	  `fee` BIGINT(20) NOT NULL,
+	  `timeStamp` BIGINT(15) NOT NULL,
+	  PRIMARY KEY (`id`))
+	  ENGINE = InnoDB
+	  DEFAULT CHARACTER SET = utf8;
+  </update>
+  <update id="createTransactions">
+  	CREATE TABLE If Not Exists `transactions`(
+	  `id` INT NOT NULL AUTO_INCREMENT,
+	  `hash` varchar(64) UNIQUE NOT NULL,
+	  `height` int(10) NOT NULL,
+	  `sender` varchar(50),
+	  `recipient` varchar(50) NOT NULL,
+	  `amount` BIGINT(15) NOT NULL,
+	  `fee` BIGINT(20) NOT NULL,
+	  `timeStamp` BIGINT(15) NOT NULL,
+	  `deadline` BIGINT(15) NOT NULL,
+	  `signature` varchar(128) NOT NULL,
+	  `type` int NOT NULL,
+	  `apostilleFlag` int,
+	  `mosaicTransferFlag` int,
+	  `aggregateFlag` int,
+	  PRIMARY KEY (`id`))
+	  ENGINE = InnoDB
+	  DEFAULT CHARACTER SET = utf8;
+  </update>
+  <update id="createUnconfirmedtransactions">
+  	CREATE TABLE If Not Exists `unconfirmedtransactions`(
+	  `id` INT NOT NULL AUTO_INCREMENT,
+	  `signature` varchar(128) NOT NULL,
+	  `timeStamp` BIGINT(15) NOT NULL,
+	  `deadline` BIGINT(15) NOT NULL,
+	  `otherHash` varchar(64),
+	  `detail` text NOT NULL,
+	  PRIMARY KEY (`id`))
+	  ENGINE = InnoDB
+	  DEFAULT CHARACTER SET = utf8;
+  </update>
+  
+  <update id="createIndexBlocksHeight">
+  	CREATE UNIQUE INDEX `height_block` on blocks(height)
+  </update>
+  <update id="createIndexAccmosAddr">
+  	CREATE UNIQUE INDEX `address_accmos` on accountmosaics(address)
+  </update>
+  <update id="createIndexAccmosId">
+  	CREATE INDEX `mosaicID_accmos` on accountmosaics(mosaicID)
+  </update>
+  <update id="createIndexAccreAddr">
+  	CREATE UNIQUE INDEX `address_accre` on accountremarks(address)
+  </update>
+  <update id="createIndexAccountsBalance">
+  	CREATE INDEX `balance_acc` on accounts(balance)
+  </update>
+  <update id="createIndexAccountsBlocks">
+  	CREATE INDEX `blocks_acc` on accounts(blocks)
+  </update>
+  <update id="createIndexMosaicsId">
+  	CREATE UNIQUE INDEX `mosaicID_mos` on mosaics(mosaicID)
+  </update>
+  <update id="createIndexMostraNs">
+  	CREATE INDEX `namespace_mostra` on mosaictransactions(namespace)
+  </update>
+  <update id="createIndexMostraMos">
+  	CREATE INDEX `mosaic_mostra` on mosaictransactions(mosaic)
+  </update>
+  <update id="createIndexMostraTs">
+  	CREATE INDEX `timeStamp_mostra` on mosaictransactions(timeStamp)
+  </update>
+  <update id="createIndexMostraSender">
+  	CREATE INDEX `sender_mostra` on mosaictransactions(sender)
+  </update>
+  <update id="createIndexMostraRici">
+  	CREATE INDEX `recipient_mostra` on mosaictransactions(recipient)
+  </update>
+  <update id="createIndexMostraNo">
+  	CREATE UNIQUE INDEX `no_mostra` on mosaictransactions(no)
+  </update>
+  <update id="createIndexSupernodesPa">
+  	CREATE INDEX `payoutAddress_sup` on supernodes(payoutAddress)
+  </update>
+  <update id="createIndexSuppRound">
+  	CREATE INDEX `round_supp` on supernodepayouts(round)
+  </update>
+  <update id="createIndexSuppTs">
+  	CREATE INDEX `timeStamp_supp` on supernodepayouts(timeStamp)
+  </update>
+  <update id="createIndexTransactionsHeight">
+  	CREATE INDEX `height_tran` on transactions(height)
+  </update>
+  <update id="createIndexTransactionsHash">
+  	CREATE UNIQUE INDEX `hash_tran` on transactions(hash)
+  </update>
+  <update id="createIndexTransactionsSender">
+  	CREATE INDEX `sender_tran` on transactions(sender)
+  </update>
+  <update id="createIndexTransactionsRecipient">
+  	CREATE INDEX `recipient_tran` on transactions(recipient)
+  </update>
+  <update id="createIndexTransactionsType">
+  	CREATE INDEX `type_tran` on transactions(type)
+  </update>
+  <update id="createIndexTransactionsMosa">
+  	CREATE INDEX `mosaictransferflag_tran` on transactions(mosaictransferflag)
+  </update>
+  <update id="createIndexTransactionsApos">
+  	CREATE INDEX `apostilleflag_tran` on transactions(apostilleflag)
+  </update>
+  <update id="createIndexTransactionsAggr">
+  	CREATE INDEX `aggregateflag_tran` on transactions(aggregateflag)
+  </update>
+  <update id="createIndexTransactionsTs">
+  	CREATE INDEX `timeStamp_tran` on transactions(timeStamp)
+  </update>
+  <update id="createIndexTransactionsUnion">
+  	alter table transactions add index height_time_index(`height`,`timestamp`);
+  </update>
+  <update id="createIndexUncontranSig">
+  	CREATE INDEX `signature_untran` on unconfirmedtransactions(signature)
+  </update>
+  <update id="createIndexUncontranTs">
+  	CREATE INDEX `timeStamp_INDEX` on unconfirmedtransactions(timeStamp)
+  </update>
+  
+  
+  <update id="dropBlocks">
+  	DROP TABLE If Exists `blocks`
+  </update>
+  <update id="dropAccountmosaics">
+  	DROP TABLE If Exists `accountmosaics`
+  </update>
+  <update id="dropAccountremarks">
+  	DROP TABLE If Exists `accountremarks`
+  </update>
+  <update id="dropAccounts">
+  	DROP TABLE If Exists `accounts`
+  </update>
+  <update id="dropErrormessages">
+  	DROP TABLE If Exists `errormessages`
+  </update>
+  <update id="dropMosaics">
+  	DROP TABLE If Exists `mosaics`
+  </update>
+  <update id="dropMosaictransactions">
+  	DROP TABLE If Exists `mosaictransactions`
+  </update>
+  <update id="dropNamespaces">
+  	DROP TABLE If Exists `namespaces`
+  </update>
+  <update id="dropPoll">
+  	DROP TABLE If Exists `poll`
+  </update>
+  <update id="dropPollindexes">
+  	DROP TABLE If Exists `pollindexes`
+  </update>
+  <update id="dropSupernodes">
+  	DROP TABLE If Exists `supernodes`
+  </update>
+  <update id="dropSupernodepayouts">
+  	DROP TABLE If Exists `supernodepayouts`
+  </update>
+  <update id="dropTransactions">
+  	DROP TABLE If Exists `transactions`
+  </update>
+  <update id="dropUnconfirmedtransactions">
+  	DROP TABLE If Exists `unconfirmedtransactions`
+  </update>
+</mapper>

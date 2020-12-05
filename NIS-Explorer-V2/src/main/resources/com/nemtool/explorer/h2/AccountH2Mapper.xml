@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.nemtool.explorer.h2.AccountH2Mapper" >
+	<resultMap id="BaseResultMap" type="com.nemtool.explorer.pojo.AccountH2" >
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="PRINTABLEKEY" property="address" jdbcType="VARCHAR" />
+		<result column="PUBLICKEY" property="publickey" jdbcType="VARCHAR" />
+	</resultMap>
+	<select id="getAllAddressAndPublickey" resultMap="BaseResultMap">
+		select PRINTABLEKEY,PUBLICKEY  from ACCOUNTS
+	</select>
+	<select id="getAddressByPublickey" parameterType="java.lang.String" resultType="java.lang.String">
+		select PRINTABLEKEY from Accounts where PUBLICKEY = #{publickey}
+	</select>
+	<select id="getAllAccount" resultMap="BaseResultMap">
+		select ID,PRINTABLEKEY,PUBLICKEY  from ACCOUNTS
+	</select>
+  
+</mapper>

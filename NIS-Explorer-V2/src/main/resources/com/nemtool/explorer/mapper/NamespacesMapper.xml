@@ -1,0 +1,325 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.nemtool.explorer.mapper.NamespacesMapper" >
+  <resultMap id="BaseResultMap" type="com.nemtool.explorer.pojo.Namespaces" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="namespace" property="namespace" jdbcType="VARCHAR" />
+    <result column="no" property="no" jdbcType="BIGINT" />
+    <result column="rootNamespace" property="rootnamespace" jdbcType="VARCHAR" />
+    <result column="rootNamespaceId" property="rootNamespaceId" jdbcType="INTEGER" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="height" property="height" jdbcType="INTEGER" />
+    <result column="timeStamp" property="timeStamp" jdbcType="BIGINT" />
+    <result column="expiredTime" property="expiredtime" jdbcType="BIGINT" />
+    <result column="subNamespaces" property="subnamespaces" jdbcType="VARCHAR" />
+    <result column="mosaicNames" property="mosaicnames" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, namespace, no, rootNamespace, rootNamespaceId, creator, height, timeStamp, expiredTime, subNamespaces, 
+    mosaicNames
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.nemtool.explorer.pojo.NamespacesExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from namespaces
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from namespaces
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from namespaces
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.nemtool.explorer.pojo.NamespacesExample" >
+    delete from namespaces
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.nemtool.explorer.pojo.Namespaces" >
+    insert into namespaces (id, namespace, no, 
+      rootNamespace, rootNamespaceId, creator, height, 
+      timeStamp, expiredTime, subNamespaces, 
+      mosaicNames)
+    values (#{id,jdbcType=INTEGER}, #{namespace,jdbcType=VARCHAR}, #{no,jdbcType=BIGINT}, 
+      #{rootnamespace,jdbcType=VARCHAR}, #{rootNamespaceId,jdbcType=VARCHAR}, #{creator,jdbcType=VARCHAR}, #{height,jdbcType=INTEGER}, 
+      #{timeStamp,jdbcType=BIGINT}, #{expiredtime,jdbcType=BIGINT}, #{subnamespaces,jdbcType=VARCHAR}, 
+      #{mosaicnames,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.nemtool.explorer.pojo.Namespaces" >
+    insert into namespaces
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="namespace != null" >
+        namespace,
+      </if>
+      <if test="no != null" >
+        no,
+      </if>
+      <if test="rootnamespace != null" >
+        rootNamespace,
+      </if>
+      <if test="rootnamespaceid != null" >
+        rootNamespaceid,
+      </if>
+      <if test="creator != null" >
+        creator,
+      </if>
+      <if test="height != null" >
+        height,
+      </if>
+      <if test="timeStamp != null" >
+        timeStamp,
+      </if>
+      <if test="expiredtime != null" >
+        expiredTime,
+      </if>
+      <if test="subnamespaces != null" >
+        subNamespaces,
+      </if>
+      <if test="mosaicnames != null" >
+        mosaicNames,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="namespace != null" >
+        #{namespace,jdbcType=VARCHAR},
+      </if>
+      <if test="no != null" >
+        #{no,jdbcType=BIGINT},
+      </if>
+      <if test="rootnamespace != null" >
+        #{rootnamespace,jdbcType=VARCHAR},
+      </if>
+      <if test="rootnamespaceid != null" >
+        #{rootnamespaceid,jdbcType=INTEGER},
+      </if>
+      <if test="creator != null" >
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="height != null" >
+        #{height,jdbcType=INTEGER},
+      </if>
+      <if test="timeStamp != null" >
+        #{timeStamp,jdbcType=BIGINT},
+      </if>
+      <if test="expiredtime != null" >
+        #{expiredtime,jdbcType=BIGINT},
+      </if>
+      <if test="subnamespaces != null" >
+        #{subnamespaces,jdbcType=VARCHAR},
+      </if>
+      <if test="mosaicnames != null" >
+        #{mosaicnames,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.nemtool.explorer.pojo.NamespacesExample" resultType="java.lang.Integer" >
+    select count(*) from namespaces
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update namespaces
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.namespace != null" >
+        namespace = #{record.namespace,jdbcType=VARCHAR},
+      </if>
+      <if test="record.no != null" >
+        no = #{record.no,jdbcType=BIGINT},
+      </if>
+      <if test="record.rootnamespace != null" >
+        rootNamespace = #{record.rootnamespace,jdbcType=VARCHAR},
+      </if>
+      <if test="record.rootnamespaceid != null" >
+        rootNamespaceid = #{record.rootnamespaceid,jdbcType=INTEGER},
+      </if>
+      <if test="record.creator != null" >
+        creator = #{record.creator,jdbcType=VARCHAR},
+      </if>
+      <if test="record.height != null" >
+        height = #{record.height,jdbcType=INTEGER},
+      </if>
+      <if test="record.timeStamp != null" >
+        timeStamp = #{record.timeStamp,jdbcType=BIGINT},
+      </if>
+      <if test="record.expiredtime != null" >
+        expiredTime = #{record.expiredtime,jdbcType=BIGINT},
+      </if>
+      <if test="record.subnamespaces != null" >
+        subNamespaces = #{record.subnamespaces,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mosaicnames != null" >
+        mosaicNames = #{record.mosaicnames,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update namespaces
+    set id = #{record.id,jdbcType=INTEGER},
+      namespace = #{record.namespace,jdbcType=VARCHAR},
+      no = #{record.no,jdbcType=BIGINT},
+      rootNamespace = #{record.rootnamespace,jdbcType=VARCHAR},
+      rootNamespaceid = #{record.rootnamespaceid,jdbcType=INTEGER},
+      creator = #{record.creator,jdbcType=VARCHAR},
+      height = #{record.height,jdbcType=INTEGER},
+      timeStamp = #{record.timeStamp,jdbcType=BIGINT},
+      expiredTime = #{record.expiredtime,jdbcType=BIGINT},
+      subNamespaces = #{record.subnamespaces,jdbcType=VARCHAR},
+      mosaicNames = #{record.mosaicnames,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.nemtool.explorer.pojo.Namespaces" >
+    update namespaces
+    <set >
+      <if test="namespace != null" >
+        namespace = #{namespace,jdbcType=VARCHAR},
+      </if>
+      <if test="no != null" >
+        no = #{no,jdbcType=BIGINT},
+      </if>
+      <if test="rootnamespace != null" >
+        rootNamespace = #{rootnamespace,jdbcType=VARCHAR},
+      </if>
+      <if test="rootnamespace != null" >
+        rootNamespaceid = #{rootnamespaceid,jdbcType=INTEGER},
+      </if>
+      <if test="creator != null" >
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="height != null" >
+        height = #{height,jdbcType=INTEGER},
+      </if>
+      <if test="timeStamp != null" >
+        timeStamp = #{timeStamp,jdbcType=BIGINT},
+      </if>
+      <if test="expiredtime != null" >
+        expiredTime = #{expiredtime,jdbcType=BIGINT},
+      </if>
+      <if test="subnamespaces != null" >
+        subNamespaces = #{subnamespaces,jdbcType=VARCHAR},
+      </if>
+      <if test="mosaicnames != null" >
+        mosaicNames = #{mosaicnames,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.nemtool.explorer.pojo.Namespaces" >
+    update namespaces
+    set namespace = #{namespace,jdbcType=VARCHAR},
+      no = #{no,jdbcType=BIGINT},
+      rootNamespace = #{rootnamespace,jdbcType=VARCHAR},
+      rootNamespaceid = #{rootnamespaceid,jdbcType=INTEGER},
+      creator = #{creator,jdbcType=VARCHAR},
+      height = #{height,jdbcType=INTEGER},
+      timeStamp = #{timeStamp,jdbcType=BIGINT},
+      expiredTime = #{expiredtime,jdbcType=BIGINT},
+      subNamespaces = #{subnamespaces,jdbcType=VARCHAR},
+      mosaicNames = #{mosaicnames,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <insert id="insertList" parameterType="java.util.List" >
+    INSERT INTO namespaces (namespace, no, rootNamespace, rootNamespaceId, creator, height, timeStamp, expiredTime, subNamespaces, mosaicNames)
+        VALUES
+        <foreach collection="namespacesList"  separator="," item="item">
+            (#{item.namespace,jdbcType=VARCHAR}, #{item.no,jdbcType=BIGINT}, 
+		      #{item.rootnamespace,jdbcType=VARCHAR}, #{item.rootnamespaceid,jdbcType=INTEGER}, #{item.creator,jdbcType=VARCHAR}, #{item.height,jdbcType=INTEGER}, 
+		      #{item.timeStamp,jdbcType=BIGINT}, #{item.expiredtime,jdbcType=BIGINT}, #{item.subnamespaces,jdbcType=VARCHAR}, 
+		      #{item.mosaicnames,jdbcType=VARCHAR})
+        </foreach>
+  </insert>
+  <select id="find" resultMap="BaseResultMap" >
+    select <include refid="Base_Column_List" /> from namespaces where 
+    <if test="no != 0" >
+      no &lt; #{no,jdbcType=BIGINT} and
+    </if>
+    namespace = rootNamespace 
+    order by timeStamp desc, no desc
+    limit #{limit,jdbcType=INTEGER}
+  </select>
+</mapper>

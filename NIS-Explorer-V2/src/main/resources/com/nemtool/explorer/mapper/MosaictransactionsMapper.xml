@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.nemtool.explorer.mapper.MosaictransactionsMapper" >
+  <resultMap id="BaseResultMap" type="com.nemtool.explorer.pojo.Mosaictransactions" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="hash" property="hash" jdbcType="VARCHAR" />
+    <result column="no" property="no" jdbcType="BIGINT" />
+    <result column="sender" property="sender" jdbcType="VARCHAR" />
+    <result column="recipient" property="recipient" jdbcType="VARCHAR" />
+    <result column="namespace" property="namespace" jdbcType="VARCHAR" />
+    <result column="mosaic" property="mosaic" jdbcType="VARCHAR" />
+    <result column="quantity" property="quantity" jdbcType="BIGINT" />
+    <result column="timeStamp" property="timeStamp" jdbcType="BIGINT" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, hash, no, sender, recipient, namespace, mosaic, quantity, timeStamp
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.nemtool.explorer.pojo.MosaictransactionsExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from mosaictransactions
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from mosaictransactions
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from mosaictransactions
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.nemtool.explorer.pojo.MosaictransactionsExample" >
+    delete from mosaictransactions
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.nemtool.explorer.pojo.Mosaictransactions" >
+    insert DELAYED into mosaictransactions (id, hash, no, 
+      sender, recipient, namespace, 
+      mosaic, quantity, timeStamp
+      )
+    values (#{id,jdbcType=INTEGER}, #{hash,jdbcType=VARCHAR}, #{no,jdbcType=BIGINT}, 
+      #{sender,jdbcType=VARCHAR}, #{recipient,jdbcType=VARCHAR}, #{namespace,jdbcType=VARCHAR}, 
+      #{mosaic,jdbcType=VARCHAR}, #{quantity,jdbcType=BIGINT}, #{timeStamp,jdbcType=BIGINT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.nemtool.explorer.pojo.Mosaictransactions" >
+    insert into mosaictransactions
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="hash != null" >
+        hash,
+      </if>
+      <if test="no != null" >
+        no,
+      </if>
+      <if test="sender != null" >
+        sender,
+      </if>
+      <if test="recipient != null" >
+        recipient,
+      </if>
+      <if test="namespace != null" >
+        namespace,
+      </if>
+      <if test="mosaic != null" >
+        mosaic,
+      </if>
+      <if test="quantity != null" >
+        quantity,
+      </if>
+      <if test="timeStamp != null" >
+        timeStamp,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="hash != null" >
+        #{hash,jdbcType=VARCHAR},
+      </if>
+      <if test="no != null" >
+        #{no,jdbcType=BIGINT},
+      </if>
+      <if test="sender != null" >
+        #{sender,jdbcType=VARCHAR},
+      </if>
+      <if test="recipient != null" >
+        #{recipient,jdbcType=VARCHAR},
+      </if>
+      <if test="namespace != null" >
+        #{namespace,jdbcType=VARCHAR},
+      </if>
+      <if test="mosaic != null" >
+        #{mosaic,jdbcType=VARCHAR},
+      </if>
+      <if test="quantity != null" >
+        #{quantity,jdbcType=BIGINT},
+      </if>
+      <if test="timeStamp != null" >
+        #{timeStamp,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.nemtool.explorer.pojo.MosaictransactionsExample" resultType="java.lang.Integer" >
+    select count(id) from mosaictransactions
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update mosaictransactions
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.hash != null" >
+        hash = #{record.hash,jdbcType=VARCHAR},
+      </if>
+      <if test="record.no != null" >
+        no = #{record.no,jdbcType=BIGINT},
+      </if>
+      <if test="record.sender != null" >
+        sender = #{record.sender,jdbcType=VARCHAR},
+      </if>
+      <if test="record.recipient != null" >
+        recipient = #{record.recipient,jdbcType=VARCHAR},
+      </if>
+      <if test="record.namespace != null" >
+        namespace = #{record.namespace,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mosaic != null" >
+        mosaic = #{record.mosaic,jdbcType=VARCHAR},
+      </if>
+      <if test="record.quantity != null" >
+        quantity = #{record.quantity,jdbcType=BIGINT},
+      </if>
+      <if test="record.timeStamp != null" >
+        timeStamp = #{record.timeStamp,jdbcType=BIGINT},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update mosaictransactions
+    set id = #{record.id,jdbcType=INTEGER},
+      hash = #{record.hash,jdbcType=VARCHAR},
+      no = #{record.no,jdbcType=BIGINT},
+      sender = #{record.sender,jdbcType=VARCHAR},
+      recipient = #{record.recipient,jdbcType=VARCHAR},
+      namespace = #{record.namespace,jdbcType=VARCHAR},
+      mosaic = #{record.mosaic,jdbcType=VARCHAR},
+      quantity = #{record.quantity,jdbcType=BIGINT},
+      timeStamp = #{record.timeStamp,jdbcType=BIGINT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.nemtool.explorer.pojo.Mosaictransactions" >
+    update mosaictransactions
+    <set >
+      <if test="hash != null" >
+        hash = #{hash,jdbcType=VARCHAR},
+      </if>
+      <if test="no != null" >
+        no = #{no,jdbcType=BIGINT},
+      </if>
+      <if test="sender != null" >
+        sender = #{sender,jdbcType=VARCHAR},
+      </if>
+      <if test="recipient != null" >
+        recipient = #{recipient,jdbcType=VARCHAR},
+      </if>
+      <if test="namespace != null" >
+        namespace = #{namespace,jdbcType=VARCHAR},
+      </if>
+      <if test="mosaic != null" >
+        mosaic = #{mosaic,jdbcType=VARCHAR},
+      </if>
+      <if test="quantity != null" >
+        quantity = #{quantity,jdbcType=BIGINT},
+      </if>
+      <if test="timeStamp != null" >
+        timeStamp = #{timeStamp,jdbcType=BIGINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.nemtool.explorer.pojo.Mosaictransactions" >
+    update mosaictransactions
+    set hash = #{hash,jdbcType=VARCHAR},
+      no = #{no,jdbcType=BIGINT},
+      sender = #{sender,jdbcType=VARCHAR},
+      recipient = #{recipient,jdbcType=VARCHAR},
+      namespace = #{namespace,jdbcType=VARCHAR},
+      mosaic = #{mosaic,jdbcType=VARCHAR},
+      quantity = #{quantity,jdbcType=BIGINT},
+      timeStamp = #{timeStamp,jdbcType=BIGINT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <insert id="insertList" parameterType="java.util.List">
+	  INSERT INTO mosaictransactions 
+		  (hash, no, sender, recipient, namespace, mosaic, quantity, timeStamp)
+      VALUES
+      <foreach collection="mosaictransactionsList"  separator="," item="item">
+          (#{item.hash,jdbcType=VARCHAR}, #{item.no,jdbcType=BIGINT}, 
+			#{item.sender,jdbcType=VARCHAR}, #{item.recipient,jdbcType=VARCHAR}, #{item.namespace,jdbcType=VARCHAR}, 
+			#{item.mosaic,jdbcType=VARCHAR}, #{item.quantity,jdbcType=BIGINT}, #{item.timeStamp,jdbcType=BIGINT}
+			)
+      </foreach>
+  </insert>
+  <select id="findAllMosaicTransactionNo" resultType="java.lang.Long">
+  	SELECT no from mosaictransactions
+  </select>
+  <select id="findByTransactionNo" parameterType="java.lang.Long" resultMap="BaseResultMap">
+  	SELECT 	<include refid="Base_Column_List" /> 
+  		from mosaictransactions where no = #{no,jdbcType=BIGINT}
+  </select>
+  <select id="selectByAddressAndNoPage" resultMap="BaseResultMap">
+  		(SELECT <include refid="Base_Column_List" /> from mosaictransactions where sender = #{address,jdbcType=VARCHAR} and 1=1
+	  		<if test="no != 0" >
+	        and no &lt; #{no,jdbcType=BIGINT}
+	      	</if>
+  		 ) 
+  		 UNION
+	  	(SELECT <include refid="Base_Column_List" /> from mosaictransactions where recipient = #{address,jdbcType=VARCHAR} and 1=1
+ 	  		<if test="no != 0" >
+	        and no &lt; #{no,jdbcType=BIGINT}
+	      	</if>
+	  	)
+  </select>
+</mapper>
