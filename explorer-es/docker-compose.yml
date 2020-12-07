@@ -8,6 +8,9 @@ services:
     network_mode: host
     volumes: 
       - ../nis:/usr/local/NIS-Explorer-V2/nis-data
+    depends_on:
+      - poll
+      - mysql
     command: 
       - /bin/sh
       - -c
@@ -28,7 +31,7 @@ services:
         npm install babel-cli -g
         npm i
         npm start
-  db:
+  mysql:
     container_name: mysql
     image: mysql:8.0.22
     environment:
