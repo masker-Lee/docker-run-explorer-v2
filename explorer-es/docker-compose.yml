@@ -1,8 +1,6 @@
 version: '3'
 services:
   explorer_es:
-    build:
-      context: ./
     image: maskerlee/explorer_es
     container_name: explorer_es
     ports:
@@ -17,8 +15,6 @@ services:
         chmod 777 run_explorer.sh
         ./run_explorer.sh
   poll:
-    build:
-      context: ./
     image: maskerlee/poll
     container_name: poll
     ports:

@@ -1,8 +1,6 @@
 version: '3'
 services:
   nis:
-    build:
-      context: ./
     image: maskerlee/nis
     container_name: nis
     ports:
