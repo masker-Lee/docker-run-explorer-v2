@@ -1,2 +1,0 @@
-FROM node:erbium-buster-slim
-COPY ./poll_data_nodejs /usr/local/poll_data_nodejs

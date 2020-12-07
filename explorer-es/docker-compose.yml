@@ -1,0 +1,40 @@
+version: '3'
+services:
+  explorer_es:
+    build:
+      context: ./
+    image: maskerlee/explorer_es
+    container_name: explorer_es
+    ports:
+      - 8080:8080
+    network_mode: host
+    command: 
+      - /bin/sh
+      - -c
+      - |
+        chmod 777 run_explorer.sh
+        ./run_explorer.sh
+  poll:
+    build:
+      context: ./
+    image: maskerlee/poll
+    container_name: poll
+    ports:
+      - 8081:8081
+    network_mode: host
+    command: 
+      - /bin/sh
+      - -c
+      - |
+        cd /usr/local/poll_data_nodejs
+        npm install babel-cli -g
+        npm i
+        npm start
+  db:
+    container_name: mysql
+    image: mysql:8.0.22
+    environment:
+      MYSQL_DATABASE: explorer_es
+      MYSQL_ROOT_PASSWORD: 123456
+    ports:
+      - 9306:3306
