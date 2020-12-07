@@ -8,6 +8,8 @@ services:
     ports:
       - 8080:8080
     network_mode: host
+    volumes: 
+      - ../nis:/usr/local/NIS-Explorer-V2/nis-data
     command: 
       - /bin/sh
       - -c
