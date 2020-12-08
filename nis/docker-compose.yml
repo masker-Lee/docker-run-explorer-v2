@@ -14,3 +14,25 @@ services:
       - |
         chmod 777 nix.runNis.sh
         ./nix.runNis.sh
+  poll:
+    image: maskerlee/poll
+    container_name: poll
+    ports:
+      - 8081:8081
+    network_mode: host
+    command: 
+      - /bin/sh
+      - -c
+      - |
+        cd /usr/local/poll_data_nodejs
+        npm install babel-cli -g
+        npm i
+        npm start
+  mysql:
+    container_name: mysql
+    image: maskerlee/mysql
+    environment:
+      MYSQL_DATABASE: explorer_es
+      MYSQL_ROOT_PASSWORD: 123456
+    ports:
+      - 9306:3306
