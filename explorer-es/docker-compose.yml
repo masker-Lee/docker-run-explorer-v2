@@ -8,9 +8,6 @@ services:
     network_mode: host
     volumes: 
       - ../nis:/usr/local/NIS-Explorer-V2/nis-data
-    depends_on:
-      - poll
-      - mysql
     command: 
       - /bin/sh
       - -c
